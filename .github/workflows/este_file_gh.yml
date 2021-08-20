@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Notify slack success
+      id: slack # IMPORTANT: reference this step ID value in future Slack steps
       uses: voxmedia/github-action-slack-notify-build@v1
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
@@ -32,7 +33,6 @@ jobs:
 
     - name: Notify slack success 
       if: success()
-      id: slack # IMPORTANT: reference this step ID value in future Slack steps
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
