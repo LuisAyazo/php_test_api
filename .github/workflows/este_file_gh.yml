@@ -1,42 +1,61 @@
-name: Branch Deleted OWHH
-env:
-  PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
-#   SERVICE: ${{ github.event.repository.name }}
-  SERVICE: php-test-luis
-  REGION: us-central1
+# name: Branch Deleted OWHH
+# env:
+#   PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
+# #   SERVICE: ${{ github.event.repository.name }}
+#   SERVICE: php-test-luis
+#   REGION: us-central1
 
 
-on: delete
+on: push
+# name: Slack Notification Demo
 jobs:
-  build:
+  slackNotification:
+    name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-      - name: run notification
-        run: |
-          echo "esto correra ?"
-          echo "repo ${{ github.event.ref }}"
-          echo "Servicio ${{env.SERVICE}}"
-          echo "Servicio ${{env.PROJECT_ID}}"
-          echo "que es esto: ${{ steps.variables.outputs.BRANCH_NAME }}"
-  delete:
-    if: github.event.ref_type == 'branch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clean up
-        run: |
-          echo "Clean up for branch ${{ github.event.ref }}"
-          
-      - name: Setup Variables
-        id: variables
-        shell: bash
-        run: echo "::set-output name=BRANCH_NAME::$(echo ${{ github.event.ref }}  | sed 's/\//-/g;s/_/-/g')"
-        
-      - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          service_account_key: ${{ secrets.GCLOUD_SA_DEV_PROJECT }}
-          export_default_credentials: true
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Post Content :rocket:'
+        SLACK_TITLE: Post Title
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-      - name: Purge CloudRun Service
-        run: gcloud run services delete ${{ env.SERVICE }}-${{ steps.variables.outputs.BRANCH_NAME }} --quiet --region ${{ env.REGION }}
+# on: delete
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: run notification
+#         run: |
+#           echo "esto correra ?"
+#           echo "repo ${{ github.event.ref }}"
+#           echo "Servicio ${{env.SERVICE}}"
+#           echo "Servicio ${{env.PROJECT_ID}}"
+#           echo "que es esto: ${{ steps.variables.outputs.BRANCH_NAME }}"
+#   delete:
+#     if: github.event.ref_type == 'branch'
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Clean up
+#         run: |
+#           echo "Clean up for branch ${{ github.event.ref }}"
+          
+#       - name: Setup Variables
+#         id: variables
+#         shell: bash
+#         run: echo "::set-output name=BRANCH_NAME::$(echo ${{ github.event.ref }}  | sed 's/\//-/g;s/_/-/g')"
+        
+#       - name: Setup Cloud SDK
+#         uses: google-github-actions/setup-gcloud@master
+#         with:
+#           project_id: ${{ env.PROJECT_ID }}
+#           service_account_key: ${{ secrets.GCLOUD_SA_DEV_PROJECT }}
+#           export_default_credentials: true
+
+#       - name: Purge CloudRun Service
+#         run: gcloud run services delete ${{ env.SERVICE }}-${{ steps.variables.outputs.BRANCH_NAME }} --quiet --region ${{ env.REGION }}
