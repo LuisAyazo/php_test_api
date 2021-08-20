@@ -1,7 +1,8 @@
 name: Branch Deleted OWHH
 env:
   PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
-  SERVICE: ${{ github.event.repository.name }}
+#   SERVICE: ${{ github.event.repository.name }}
+  SERVICE: php-test-luis
   REGION: us-central1
 
 
