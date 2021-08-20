@@ -12,31 +12,61 @@ on:
   pull_request:
     branches:
       - master
-
-      
+ 
+    
+    
 # name: Slack Notification Demo
 jobs:
   slackNotification:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - name: run notification
+#     - uses: voxmedia/github-action-slack-notify-build@v1
+    - name: Notify slack success
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        channel: general
+        status: STARTED
+        color: good
+
+    - name: Notify slack success 
+      if: success()
+      id: slack # IMPORTANT: reference this step ID value in future Slack steps
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: general
+        status: STARTING
+        color: warning
+      
+    - name: run this message test | deploy
       run: |
         echo "esto correra ?"
         curl -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/LuisAyazo/php_test_api/actions/runs
         
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
+
+    - name: Notify slack success
+      if: success()
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Post Title
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: general
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack fail
+      if: failure()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: general
+        status: FAILED
+        color: danger
 
 # on: delete
 # jobs:
