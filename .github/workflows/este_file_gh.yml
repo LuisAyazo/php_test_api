@@ -47,6 +47,9 @@ jobs:
         echo "esto correra ?"
         curl -H "Accept: application/vnd.github.v3+json" \
         https://api.github.com/repos/LuisAyazo/php_test_api/actions/runs
+    - name: tratando de probocar error
+      run: |
+        curl http://cacaplop.com  
         
 
     - name: Notify slack success
