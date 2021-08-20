@@ -25,6 +25,11 @@ jobs:
         run: |
           echo "Clean up for branch ${{ github.event.ref }}"
           
+      - name: Setup Variables
+        id: variables
+        shell: bash
+        run: echo "::set-output name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//--/g;s/_/-/g')"
+        
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
