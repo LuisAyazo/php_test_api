@@ -14,8 +14,8 @@ jobs:
         run: |
           echo "esto correra ?"
           echo "repo ${{ github.event.ref }}"
-          echo "Servicio ${{SERVICE}}"
-          echo "Servicio ${{PROJECT_ID}}"
+          echo "Servicio ${{env.SERVICE}}"
+          echo "Servicio ${{env.PROJECT_ID}}"
           echo "que es esto: ${{ steps.variables.outputs.BRANCH_NAME }}"
   delete:
     if: github.event.ref_type == 'branch'
