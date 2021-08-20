@@ -21,8 +21,8 @@ jobs:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: voxmedia/github-action-slack-notify-build@v1
     - name: Notify slack success
+      uses: voxmedia/github-action-slack-notify-build@v1
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
       with:
