@@ -1,4 +1,10 @@
 name: Branch Deleted OWHH
+env:
+  PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
+  SERVICE: ${{ github.event.repository.name }}
+  REGION: us-central1
+
+
 on: delete
 jobs:
   build:
@@ -8,6 +14,9 @@ jobs:
         run: |
           echo "esto correra ?"
           echo "repo ${{ github.event.ref }}"
+          echo "Servicio ${{SERVICE}}"
+          echo "Servicio ${{PROJECT_ID}}"
+          echo "que es esto: ${{ steps.variables.outputs.BRANCH_NAME }}"
   delete:
     if: github.event.ref_type == 'branch'
     runs-on: ubuntu-latest
@@ -15,3 +24,13 @@ jobs:
       - name: Clean up
         run: |
           echo "Clean up for branch ${{ github.event.ref }}"
+          
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ secrets.GCLOUD_SA_DEV_PROJECT }}
+          export_default_credentials: true
+
+      - name: Purge CloudRun Service
+        run: gcloud run services delete ${{ env.SERVICE }}-${{ steps.variables.outputs.BRANCH_NAME }} --quiet --region ${{ env.REGION }}
