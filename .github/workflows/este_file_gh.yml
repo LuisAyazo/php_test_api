@@ -43,6 +43,7 @@ jobs:
 
 
     - name: Slack Notification Step
+      if: always()
       id: slack
       uses: LuisAyazo/slack-notifications-action@master
       with:
