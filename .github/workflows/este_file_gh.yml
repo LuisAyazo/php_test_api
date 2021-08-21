@@ -26,7 +26,7 @@ jobs:
         deploy_url: "${{ steps.hello.outputs.message_id }}"
         color: ${{ job.status }}
       env:
-        SLACK_WEBHOOK: ${{ secrets.UNIVISION_WEBHOOK }}
+        SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.message_id }}"
