@@ -28,7 +28,9 @@ jobs:
     - name: Get deployment conditions
       id: deploy_status
       shell: bash
-      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project univision-test-ott-apps --platform managed --region us-central1 --format=json)"
+      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(curl -XGET http://35.203.174.20/users/db)"
+      
+#       run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project univision-test-ott-apps --platform managed --region us-central1 --format=json)"
 #     - name: tratando de probocar error
 #       run: |
 #         curl http://cacaplop.com  
