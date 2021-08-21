@@ -47,11 +47,11 @@ jobs:
       with:
         channel: "devops"
         deployment_url: "${{ steps.hello.outputs.message_id }}"
-#         deployment_status: "${{ steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS }}"
+        deployment_status: "${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
         color: ${{ job.status }}
       env:
         SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-        DEPLOYMENT_STATUS: "${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
+#         DEPLOYMENT_STATUS: "${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
         
         
     # Use the output from the `hello` step
