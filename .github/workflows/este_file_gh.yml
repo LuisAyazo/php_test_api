@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Hello world action step
       id: hello
-      uses: LuisAyazo/slack-notifications-action@v0.0.1
+      uses: LuisAyazo/slack-notifications-action@v0.0.2
       with:
         channel: "probemos esto tio" 
     # Use the output from the `hello` step
