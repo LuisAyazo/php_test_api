@@ -38,10 +38,11 @@ jobs:
       with:
         channel: "devops"
         deployment_url: "${{ steps.hello.outputs.message_id }}"
-        deployment_status: "${{ steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS }}"
+#         deployment_status: "${{ steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS }}"
         color: ${{ job.status }}
       env:
         SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        INPUT_DEPLOYMENT_STATUS: "${{ steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS }}"
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.message_id }}"
