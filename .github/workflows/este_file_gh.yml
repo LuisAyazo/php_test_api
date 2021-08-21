@@ -22,7 +22,9 @@ jobs:
       id: hello
       uses: LuisAyazo/slack-notifications-action@master
       with:
-        channel: "probemos esto tio" 
+        channel: "devops"
+        deploy_url: "${{ steps.hello.outputs.message_id }}"
+        color: ${{ job.status }}
       env:
         SLACK_WEBHOOK: ${{ secrets.UNIVISION_WEBHOOK }}
     # Use the output from the `hello` step
