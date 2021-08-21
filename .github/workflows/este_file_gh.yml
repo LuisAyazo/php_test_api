@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     name: notify intelligent
     steps:
+    - name: tratando de probocar error
+      run: |
+        curl http://cacaplop.com  
     - name: Hello world action step
       id: hello
       uses: LuisAyazo/slack-notifications-action@master
