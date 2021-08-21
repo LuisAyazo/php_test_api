@@ -34,7 +34,7 @@ jobs:
       run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(curl -XGET http://35.203.174.20/users/db)"
       
     - name: Test
-      run: echo ${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}
+      run: echo ${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}
 #       run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project univision-test-ott-apps --platform managed --region us-central1 --format=json)"
 #     - name: tratando de probocar error
 #       run: |
@@ -47,7 +47,7 @@ jobs:
       with:
         channel: "devops"
         deployment_url: "${{ steps.hello.outputs.message_id }}"
-        deployment_status: "${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
+        deployment_status: "${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
         color: ${{ job.status }}
       env:
         SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
