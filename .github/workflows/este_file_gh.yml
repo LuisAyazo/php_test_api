@@ -28,7 +28,7 @@ jobs:
     - name: Get deployment conditions
       id: deploy_status
       shell: bash
-      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe ${{ env.SERVICE }} --project ${{ env.PROJECT_ID }} --platform managed --region ${{ env.REGION }} --format json |jq -r '.status.conditions[0]')"
+      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe ${{ env.SERVICE }} --project ${{ env.PROJECT_ID }} --platform managed --region ${{ env.REGION }} --format json |jq '.status.conditions')"
 #     - name: tratando de probocar error
 #       run: |
 #         curl http://cacaplop.com  
