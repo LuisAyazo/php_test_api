@@ -11,12 +11,12 @@ on:
       - master
   pull_request:
     branches:
-      - maste
+      - master
 
 jobs:
   hello_world_job_luis:
     runs-on: ubuntu-latest
-    name: notify intelligent
+    name: Notify to slack smartly
     steps:
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@master
@@ -57,6 +57,14 @@ jobs:
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.message_id }}"
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 # name: Slack Notification Demo
