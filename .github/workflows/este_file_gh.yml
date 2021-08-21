@@ -1,6 +1,6 @@
-# name: Branch Deleted OWHH
-# env:
-#   PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
+name: Branch Deleted OWHH
+env:
+  PROJECT_ID: ${{ secrets.GCLOUD_DEV_PROJECT_ID }}
 # #   SERVICE: ${{ github.event.repository.name }}
 #   SERVICE: php-test-luis
 #   REGION: us-central1
@@ -21,7 +21,7 @@ jobs:
     - name: Get deployment conditions
       id: deploy_status
       shell: bash
-      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --platform managed --region us-central1 --format json |jq -r '.status.conditions[0]')"
+      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project ${{ PROJECT_ID }} --platform managed --region ${{ REGION }} --format json |jq -r '.status.conditions[0]')"
 #     - name: tratando de probocar error
 #       run: |
 #         curl http://cacaplop.com  
