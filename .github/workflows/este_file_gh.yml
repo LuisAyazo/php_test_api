@@ -25,24 +25,24 @@ jobs:
         service_account_key: ${{ secrets.GCLOUD_SA_DEV_PROJECT }}
         export_default_credentials: true
 
-    - name: Set env
-      run: echo "USERS_API=$(curl -XGET http://35.203.174.20/users/db)" >> $GITHUB_ENV
+#     - name: Set env
+#       run: echo "USERS_API=$(curl -XGET http://35.203.174.20/users/db)" >> $GITHUB_ENV
         
     - name: Get deployment conditions
       id: deploy_status
       shell: bash
-      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(curl -XGET http://35.203.174.20/users/db)"
-      
-    - name: Test
-      run: echo ${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}
-#       run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project univision-test-ott-apps --platform managed --region us-central1 --format=json)"
+#       run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(curl -XGET http://35.203.174.20/users/db)"
+      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --project univision-test-ott-apps --platform managed --region us-central1 --format=json)"      
+#     - name: Test
+#       run: echo ${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}
+
 #     - name: tratando de probocar error
 #       run: |
 #         curl http://cacaplop.com  
 
 
-    - name: Hello world action step
-      id: hello
+    - name: Slack Notification Step
+      id: slack
       uses: LuisAyazo/slack-notifications-action@master
       with:
         channel: "devops"
