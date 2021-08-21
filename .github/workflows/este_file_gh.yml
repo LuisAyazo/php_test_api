@@ -16,16 +16,16 @@ on:
 jobs:
   hello_world_job_luis:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: notify intelligent
     steps:
     - name: Hello world action step
       id: hello
-      uses: LuisAyazo/slack-notifications-action@v1
+      uses: LuisAyazo/slack-notifications-action@v0.0.1
       with:
-        who-to-greet: 'Mona the Octocat'
+        channel: "probemos esto tio" 
     # Use the output from the `hello` step
     - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+      run: echo "The time was ${{ steps.hello.outputs.message_id }}"
     
     
 # name: Slack Notification Demo
