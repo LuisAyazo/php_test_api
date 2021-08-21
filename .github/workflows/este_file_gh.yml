@@ -24,7 +24,7 @@ jobs:
       with:
         channel: "probemos esto tio" 
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK: ${{ secrets.UNIVISION_WEBHOOK }}
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.message_id }}"
