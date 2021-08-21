@@ -37,9 +37,9 @@ jobs:
 #     - name: Test
 #       run: echo ${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}
 
-    - name: tratando de probocar error
-      run: |
-        curl http://cacaplop.com  
+#     - name: tratando de probocar error
+#       run: |
+#         curl http://cacaplop.com  
 
 
     - name: Slack Notification Step
