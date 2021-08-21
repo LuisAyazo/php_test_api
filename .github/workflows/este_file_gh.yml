@@ -18,6 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     name: notify intelligent
     steps:
+    - name: Setup Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: ${{ env.PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_SA_DEV_PROJECT }}
+        export_default_credentials: true
+        
     - name: Get deployment conditions
       id: deploy_status
       shell: bash
