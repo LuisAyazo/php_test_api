@@ -11,68 +11,81 @@ on:
       - master
   pull_request:
     branches:
-      - master
- 
+      - maste
+
+jobs:
+  hello_world_job_luis:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+    - name: Hello world action step
+      id: hello
+      uses: LuisAyazo/slack-notifications-action@v1
+      with:
+        who-to-greet: 'Mona the Octocat'
+    # Use the output from the `hello` step
+    - name: Get the output time
+      run: echo "The time was ${{ steps.hello.outputs.time }}"
     
     
 # name: Slack Notification Demo
-jobs:
-  slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-    - name: Notify slack success
-      id: slack # IMPORTANT: reference this step ID value in future Slack steps
-      uses: voxmedia/github-action-slack-notify-build@v1
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-      with:
-        channel: general
-        status: STARTED
-        color: good
+# jobs:
+#   slackNotification:
+#     name: Slack Notification
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Notify slack success
+#       id: slack # IMPORTANT: reference this step ID value in future Slack steps
+#       uses: voxmedia/github-action-slack-notify-build@v1
+#       env:
+#         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+#       with:
+#         channel: general
+#         status: STARTED
+#         color: good
 
-    - name: Notify slack success 
-      if: success()
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-      uses: voxmedia/github-action-slack-notify-build@v1
-      with:
-        message_id: ${{ steps.slack.outputs.message_id }}
-        channel: general
-        status: STARTING
-        color: warning
+#     - name: Notify slack success 
+#       if: success()
+#       env:
+#         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+#       uses: voxmedia/github-action-slack-notify-build@v1
+#       with:
+#         message_id: ${{ steps.slack.outputs.message_id }}
+#         channel: general
+#         status: STARTING
+#         color: warning
       
-    - name: run this message test | deploy
-      run: |
-        echo "esto correra ?"
-        curl -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/LuisAyazo/php_test_api/actions/runs
-    - name: tratando de probocar error
-      run: |
-        curl http://cacaplop.com  
+#     - name: run this message test | deploy
+#       run: |
+#         echo "esto correra ?"
+#         curl -H "Accept: application/vnd.github.v3+json" \
+#         https://api.github.com/repos/LuisAyazo/php_test_api/actions/runs
+#     - name: tratando de probocar error
+#       run: |
+#         curl http://cacaplop.com  
         
 
-    - name: Notify slack success
-      if: success()
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-      uses: voxmedia/github-action-slack-notify-build@v1
-      with:
-        message_id: ${{ steps.slack.outputs.message_id }}
-        channel: general
-        status: SUCCESS
-        color: good
+#     - name: Notify slack success
+#       if: success()
+#       env:
+#         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+#       uses: voxmedia/github-action-slack-notify-build@v1
+#       with:
+#         message_id: ${{ steps.slack.outputs.message_id }}
+#         channel: general
+#         status: SUCCESS
+#         color: good
 
-    - name: Notify slack fail
-      if: failure()
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-      uses: voxmedia/github-action-slack-notify-build@v1
-      with:
-        message_id: ${{ steps.slack.outputs.message_id }}
-        channel: general
-        status: FAILED
-        color: danger
+#     - name: Notify slack fail
+#       if: failure()
+#       env:
+#         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+#       uses: voxmedia/github-action-slack-notify-build@v1
+#       with:
+#         message_id: ${{ steps.slack.outputs.message_id }}
+#         channel: general
+#         status: FAILED
+#         color: danger
 
 # on: delete
 # jobs:
