@@ -18,15 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     name: notify intelligent
     steps:
-    - name: tratando de probocar error
-      run: |
-        curl http://cacaplop.com  
+    - name: Get deployment conditions
+      id: deploy_status
+      shell: bash
+      run:  echo "::set-output name=DEPLOY_CONDITION_STATUS::$(gcloud run services describe content-service-api-cnts-24 --platform managed --region us-central1 --format json |jq -r '.status.conditions[0]')"
+#     - name: tratando de probocar error
+#       run: |
+#         curl http://cacaplop.com  
     - name: Hello world action step
       id: hello
       uses: LuisAyazo/slack-notifications-action@master
       with:
         channel: "devops"
-        deploy_url: "${{ steps.hello.outputs.message_id }}"
+        deployment_url: "${{ steps.hello.outputs.message_id }}"
+        deployment_status: "${{ steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS }}"
         color: ${{ job.status }}
       env:
         SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
@@ -114,10 +119,9 @@ jobs:
 #         run: |
 #           echo "Clean up for branch ${{ github.event.ref }}"
           
-#       - name: Setup Variables
-#         id: variables
-#         shell: bash
+       
 #         run: echo "::set-output name=BRANCH_NAME::$(echo ${{ github.event.ref }}  | sed 's/\//-/g;s/_/-/g')"
+
         
 #       - name: Setup Cloud SDK
 #         uses: google-github-actions/setup-gcloud@master
