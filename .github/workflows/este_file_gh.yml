@@ -51,7 +51,7 @@ jobs:
         color: ${{ job.status }}
       env:
         SLACK_API_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-#         DEPLOYMENT_STATUS: "${{ fromJSON(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
+        DEPLOYMENT_STATUS: "${{ toJson(steps.deploy_status.outputs.DEPLOY_CONDITION_STATUS)}}"
         
         
     # Use the output from the `hello` step
